@@ -3,30 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelfa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: oabdelfa <oabdelfa@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 18:17:42 by oabdelfa          #+#    #+#             */
-/*   Updated: 2021/12/02 13:38:49 by oabdelfa         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:24:29 by oabdelfa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static char *ft_assignl(char *str, char **line, size_t i)
+{
+	char *tmp;
+	
+	*line = ft_strsub(str, 0, i);
+	tmp = ft_strdup(&(str[i + 1]));
+	ft_free(str, ft_strlen(str));
+	return (tmp);
+}
+
 static int	ft_readl(char **str, char **line)
 {
-	int		i;
-	char	*tmp;
+	size_t	i;
 
-	i = 0;
-	while ((*str)[i] != NL && (*str)[i])
-		i++;
+	i = ft_strlenc(*str, NL);
 	if ((*str)[i] == NL)
 	{
-		*line = ft_strsub(*str, 0, i);
-		tmp = ft_strdup(&((*str)[i + 1]));
-		free(*str);
-		*str = tmp;
-		if ((*str)[0] == '\0')
+		*str = ft_assignl(*str, line, i);
+		if (!(*str)[0])
 			ft_strdel(str);
 	}
 	else
@@ -37,39 +41,39 @@ static int	ft_readl(char **str, char **line)
 	return (1);
 }
 
-static int	ft_res(char **str, char **line, int fil, int fd)
+static int	ft_res(char **str, char **line, int txt, int fd)
 {
-	if (fil < 0)
+	if (txt < 0)
 		return (-1);
-	else if (fil == 0 && !str[fd])
+	else if (txt == 0 && !str[fd])
 		return (0);
 	return (ft_readl(&str[fd], line));
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	int			fil;
+	int			txt;
 	char		*tmp;
 	char		buff[BUFF_SIZE + 1];
 	static char	*str[FD_SIZE];
 
 	if (fd < 0 || !line || fd > FD_SIZE)
 		return (-1);
-	fil = read(fd, buff, BUFF_SIZE);
-	while (fil > 0)
+	txt = read(fd, buff, BUFF_SIZE);
+	while (txt > 0)
 	{
-		buff[fil] = '\0';
+		buff[txt] = '\0';
 		if (!str[fd])
 			str[fd] = ft_strdup(buff);
 		else
 		{
 			tmp = ft_strjoin(str[fd], buff);
-			free(str[fd]);
+			ft_free(str[fd], ft_strlen(str[fd]));
 			str[fd] = tmp;
 		}
 		if (ft_strchr(str[fd], NL))
 			break ;
-		fil = read(fd, buff, BUFF_SIZE);
+		txt = read(fd, buff, BUFF_SIZE);
 	}
-	return (ft_res(str, line, fil, fd));
+	return (ft_res(str, line, txt, fd));
 }
