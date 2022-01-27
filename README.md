@@ -1,12 +1,34 @@
 # GET_Next_Line
-Hive Helsinki - 42 Get_Next_Line 
+Hive Helsinki - Get_Next_Line 
+
+## :arrow_right: Project's goal:
 
 This project is a function that reads one line at the time from a given text file.
-The line should be ending by '\n' newline character so it can move forward for
+The line should be ending by ```'\n'``` newline character so it can move forward for
 the next line.
 
-To test this function, clone the repository at the root of your project, and when
-you call the function the first parameter will take the file descriptor, and the second
-is the address of string character "char *str" for example.
+## 	:heavy_plus_sign: Installation:
 
-⚠️ Check the project subject for more understanding of the function.
+```git clone git@github.com:omaralsakka/GET_Next_Line.git```
+
+## :open_book: User guide:
+
+1-  create a file descriptor by opening a text file, for example:
+
+``` fd = open("file.txt", O_RDONLY);```
+
+2-  create a string variable:
+
+```char *str;```
+
+3-  send the string address and file descriptor into the function:
+
+```get_next_line(fd, &str);```
+
+4-  print the string content:
+
+```ft_putstr(str);```
+
+## :exclamation: Note:
+
+This function ```returns 0``` when no lines left to read, hence it can be used as a ```while loop``` condition
