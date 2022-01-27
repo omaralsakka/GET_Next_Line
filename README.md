@@ -9,7 +9,11 @@ the next line.
 
 ## 	:heavy_plus_sign: Installation:
 
-```git clone git@github.com:omaralsakka/GET_Next_Line.git```
+1-  ```git clone git@github.com:omaralsakka/GET_Next_Line.git```
+
+2-  ```cd libft```
+
+3-  ```make```
 
 ## :open_book: User guide:
 
