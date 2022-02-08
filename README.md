@@ -1,5 +1,5 @@
 # GET_Next_Line
-Hive Helsinki - Get_Next_Line 
+Hive Helsinki / Get_Next_Line 
 
 ## :arrow_right: Project's goal:
 
